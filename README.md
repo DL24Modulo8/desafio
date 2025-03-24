@@ -1,5 +1,11 @@
 # Desafio 1
 
+Crear index.js
+inicilizalizar node 
+cree dockerfile
+instale express
+commit
+
 
 ## Scripts utilizados
 
