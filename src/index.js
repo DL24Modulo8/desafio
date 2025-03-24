@@ -3,34 +3,29 @@ const app = express();
 const PORT = 3000;
 
 
-// Ruta Home
-app.get("/", (req, res) => {
-    res.send("Bienvenido a la página Home");
-});
-// Ruta Todos
-app.get("/todos", (req, res) => {
-    res.json([
-        { id: 1, tarea: "Aprender Docker" },
-        { id: 2, tarea: "Configurar Express" },
-    ]);
+let tasks = [
+    { id: 1, name: 'Task 1' },
+    { id: 2, name: 'Task 2' }
+];
+
+app.get('/tasks', (req, res) => {
+    res.json(tasks);
 });
 
-// Ruta /tasks: responde un mensaje genérico
-app.get("/tasks", (req, res) => {
-    res.send("Bienvenido a la ruta Tasks");
-});
-
-// Ruta /tasks/:id: responde un mensaje genérico
-app.get("/tasks/:id", (req, res) => {
-    const { id } = req.params;
-    res.send(`Estás consultando la tarea con ID: ${id}`);
+app.get('/tasks/:id', (req, res) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if (!task) return res.status(404).send('Task not found');
+    res.json(task);
 });
 
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
-
-
-// Exportar la aplicación para Jest
+// Exporta la aplicación para pruebas
 module.exports = app;
+
+// Solo iniciar el servidor si el archivo se ejecuta directamente
+if (require.main === module) {
+    const PORT = 3000;
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    });
+}
