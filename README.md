@@ -1,26 +1,44 @@
-# Desafio 1
-
-Crear index.js
-inicilizalizar node 
-cree dockerfile
-instale express
-commit
+# Desafio Modulo 8
 
 
 ## Scripts utilizados
 
-```
-script 1
-```
+**Instalación de dependencias**
 
-
-**Documentacion**
 ```
-script 2
+npm i eslint express
 ```
 
+```
+npm i jest supertest --save-dev
+```
 
-```sh
-git config --global user.name "Tu Nombre"
-git config --global user.email "tuemail@example.com"
+**Node run**
+
+```
+npm start
+```
+
+**Run Jest**
+
+```
+npx jest
+```
+
+**Run Jest**
+
+```
+npx jest
+```
+
+**Construir Docker Image**
+
+```
+docker build -t desafio-app .
+```
+
+**Run Container**
+
+```
+docker run -p 3000:3000 desafio-app
 ```

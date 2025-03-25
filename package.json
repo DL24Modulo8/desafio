@@ -10,15 +10,14 @@
     "lint": "eslint ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Grupo Modulo 8",
   "license": "ISC",
   "dependencies": {
     "eslint": "^9.23.0",
-    "expres": "^0.0.5",
-    "express": "^4.21.2",
-    "jest": "^29.7.0"
+    "express": "^4.21.2"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "supertest": "^7.1.0"
   }
 }
