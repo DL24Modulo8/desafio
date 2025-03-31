@@ -1,13 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-        }
-    }
+    agent any
     environment {
+        NODE_VERSION = '18'
         IMAGE_NAME = 'desafio-cicd'
         IMAGE_TAG = 'latest'
-        CONTAINER_NAME = 'desafio-cicd-container'
+        CONTAINER_NAME = 'desafio-container'
     }
     stages {
         stage('Checkout') {
@@ -19,17 +16,25 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    echo '⚙️ Instalando dependencias...'
-                    sh 'npm install'
-                    sh 'npm run build'
+                    try {
+                        echo '⚙️ Instalando dependencias...'
+                        sh 'npm install'
+                        sh 'npm run build'
+                    } catch (Exception e) {
+                        error('❌ Error en la etapa de Build')
+                    }
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    echo '🧪 Ejecutando pruebas...'
-                    sh 'npm test'
+                    try {
+                        echo '🧪 Ejecutando pruebas...'
+                        sh 'npm test'
+                    } catch (Exception e) {
+                        error('❌ Error en la etapa de Test')
+                    }
                 }
             }
         }
