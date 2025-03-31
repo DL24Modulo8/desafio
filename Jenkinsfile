@@ -54,7 +54,7 @@ pipeline {
                     sh "docker rm ${CONTAINER_NAME} || true"
 
                     echo '🚀 Iniciando nuevo contenedor...'
-                    sh "docker run -d --name ${CONTAINER_NAME} -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker run -d --name ${CONTAINER_NAME} -p 8090:3000 ${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
