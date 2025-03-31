@@ -1,0 +1,213 @@
+Started by user unknown or anonymous
+Obtained Jenkinsfile from git https://github.com/DL24Modulo8/desafio
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/Ejercio_DL24Modulo8
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential b61b048f-79a6-456f-8cbf-33cfaef2b971
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/Ejercio_DL24Modulo8/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/DL24Modulo8/desafio # timeout=10
+Fetching upstream changes from https://github.com/DL24Modulo8/desafio
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.5'
+using GIT_ASKPASS to set credentials git
+ > git fetch --tags --force --progress -- https://github.com/DL24Modulo8/desafio +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5259f8c783628340eb5c919eefa7266deae4879a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5259f8c783628340eb5c919eefa7266deae4879a # timeout=10
+Commit message: "change docker port"
+ > git rev-list --no-walk ce59cd8955c0a2b59606ad588d1e6a9a66f0ab3d # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] echo
+📥 Clonando el repositorio...
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential b61b048f-79a6-456f-8cbf-33cfaef2b971
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/Ejercio_DL24Modulo8/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/DL24Modulo8/desafio # timeout=10
+Fetching upstream changes from https://github.com/DL24Modulo8/desafio
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.5'
+using GIT_ASKPASS to set credentials git
+ > git fetch --tags --force --progress -- https://github.com/DL24Modulo8/desafio +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5259f8c783628340eb5c919eefa7266deae4879a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5259f8c783628340eb5c919eefa7266deae4879a # timeout=10
+Commit message: "change docker port"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+⚙️ Instalando dependencias...
+[Pipeline] sh
++ npm install
+
+up to date, audited 419 packages in 2s
+
+65 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[Pipeline] sh
++ npm run build
+
+> desafio@1.0.0 build
+> echo 'No hay proceso de compilación en este proyecto'
+
+No hay proceso de compilación en este proyecto
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+🧪 Ejecutando pruebas...
+[Pipeline] sh
++ npm test
+
+> desafio@1.0.0 test
+> jest --coverage --forceExit
+
+PASS test/app.test.js
+  API Tests
+    ✓ GET /tasks - Debería devolver todas las tareas (47 ms)
+    ✓ GET /tasks/:id - Debería devolver la tarea con el ID proporcionado (5 ms)
+    ✓ GET /tasks/:id - Debería devolver un error 404 si la tarea no existe (4 ms)
+
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+----------|---------|----------|---------|---------|-------------------
+All files |   82.35 |       75 |      75 |      80 |                   
+ index.js |   82.35 |       75 |      75 |      80 | 27-29             
+----------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.682 s, estimated 1 s
+Ran all test suites.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+🐳 Construyendo imagen Docker...
+[Pipeline] sh
++ docker build -t desafio-cicd:latest .
+#1 [internal] load build definition from Dockerfile
+#1 sha256:655494f7fa150949e87610ec7f5b73e233f2d42b3a1bb734616ac2902a80b946
+#1 transferring dockerfile: 376B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:22
+#2 sha256:5d368945fde7fc3f86d49c2b3107292bbdf8fe230173bb12da0d4fe957dcbe22
+#2 DONE 0.6s
+
+#3 [internal] load .dockerignore
+#3 sha256:8b632d025e7ce955c53d6f0cac25c0b769a182507d8cccc89c0734e67ca5a039
+#3 transferring context: 87B done
+#3 DONE 0.0s
+
+#7 [internal] load build context
+#7 sha256:baf52d5eefd5f06f7814752d55df2034f8f14a18d298b1b7c96962e61e57f1d1
+#7 transferring context: 212.65kB 0.0s done
+#7 DONE 0.1s
+
+#9 [1/5] FROM docker.io/library/node:22@sha256:c7fd844945a76eeaa83cb372e4d289b4a30b478a1c80e16c685b62c54156285b
+#9 sha256:1e9089ae4c6bf4bfeac4bfa5c2d7227138882ee6938f983733c81f40c76299dc
+#9 resolve docker.io/library/node:22@sha256:c7fd844945a76eeaa83cb372e4d289b4a30b478a1c80e16c685b62c54156285b 0.1s done
+#9 DONE 0.1s
+
+#6 [3/5] COPY package.json package-lock.json ./
+#6 sha256:b5ff6ad2f357af417f2837dbb9d274a161519adf833e70d8dee137892e23b570
+#6 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 sha256:08891349ae5a51e00a8b21dea7888cb9b6621693eb9d2fbae559aad3746d43bd
+#8 CACHED
+
+#5 [4/5] RUN npm install
+#5 sha256:ebda7610b6de871be798359eaaee2c6338f1ca34e8fe1656a04d993145fc7256
+#5 CACHED
+
+#4 [5/5] COPY . .
+#4 sha256:0cbba26f741ca214c8181660d7fd8104affbaccab2a6d8a924592792a18a581f
+#4 DONE 0.3s
+
+#10 exporting to image
+#10 sha256:628aacd8f447f4e2268cbd281bc66ab934d1d165d8a56ac79b612c4b7c112df2
+#10 exporting layers
+#10 exporting layers 0.3s done
+#10 exporting manifest sha256:22b0007314970f8fbc4b350e39b006651a97cc57ee029039ac5186c97a30bebd 0.0s done
+#10 exporting config sha256:31fcadc8e76f5f3fcd0265615c5f1b00634aab6ae38e63ac679f39552e30ef9d
+#10 exporting config sha256:31fcadc8e76f5f3fcd0265615c5f1b00634aab6ae38e63ac679f39552e30ef9d 0.0s done
+#10 naming to docker.io/library/desafio-cicd:latest 0.0s done
+#10 unpacking to docker.io/library/desafio-cicd:latest
+#10 unpacking to docker.io/library/desafio-cicd:latest 0.2s done
+#10 DONE 0.7s
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Docker Container)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+🛑 Eliminando contenedor anterior (si existe)...
+[Pipeline] sh
++ docker stop desafio-container
+desafio-container
+[Pipeline] sh
++ docker rm desafio-container
+desafio-container
+[Pipeline] echo
+🚀 Iniciando nuevo contenedor...
+[Pipeline] sh
++ docker run -d --name desafio-container -p 8090:3000 desafio-cicd:latest
+68aba17d2218d6d137b09a951b57a1bebf6048b52514312d17a15044d9ccd15f
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+✅ Pipeline completado con éxito
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
