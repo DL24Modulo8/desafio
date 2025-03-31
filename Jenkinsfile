@@ -4,7 +4,7 @@ pipeline {
         NODE_VERSION = '18'
         IMAGE_NAME = 'desafio-cicd'
         IMAGE_TAG = 'latest'
-        CONTAINER_NAME = 'mi-app-container'
+        CONTAINER_NAME = 'desafio-container'
     }
     stages {
         stage('Checkout') {
