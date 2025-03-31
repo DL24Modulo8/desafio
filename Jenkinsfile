@@ -55,7 +55,7 @@ pipeline {
 
                     echo '🚀 Iniciando nuevo contenedor...'
                     sh "docker run -d --name ${CONTAINER_NAME} -p 8090:3000 ${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker log ${CONTAINER_NAME}"
+                    sh "docker logs ${CONTAINER_NAME}"
                 }
             }
         }
