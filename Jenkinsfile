@@ -1,7 +1,10 @@
 pipeline {
     agent any
     environment {
-        NODE_VERSION = '18' // Cambia si usas otra versión de Node.js
+        NODE_VERSION = '18'
+        IMAGE_NAME = 'desafio-cicd'
+        IMAGE_TAG = 'latest'
+        CONTAINER_NAME = 'mi-app-container'
     }
     stages {
         stage('Checkout') {
@@ -17,7 +20,7 @@ pipeline {
                         echo '⚙️ Instalando dependencias...'
                         sh 'npm install'
                         sh 'npm run build'
-} catch (Exception e) {
+                    } catch (Exception e) {
                         error('❌ Error en la etapa de Build')
                     }
                 }
@@ -29,21 +32,29 @@ pipeline {
                     try {
                         echo '🧪 Ejecutando pruebas...'
                         sh 'npm test'
-} catch (Exception e) {
+                    } catch (Exception e) {
                         error('❌ Error en la etapa de Test')
                     }
                 }
             }
         }
-        stage('Deploy') {
+        stage('Docker Build') {
             steps {
                 script {
-                    try {
-                        echo '🚀 Desplegando aplicación...'
-                        sh 'npm start &'
-} catch (Exception e) {
-                        error('❌ Error en la etapa de Deploy')
-                    }
+                    echo '🐳 Construyendo imagen Docker...'
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    echo '🛑 Eliminando contenedor anterior (si existe)...'
+                    sh "docker stop ${CONTAINER_NAME} || true"
+                    sh "docker rm ${CONTAINER_NAME} || true"
+
+                    echo '🚀 Iniciando nuevo contenedor...'
+                    sh "docker run -d --name ${CONTAINER_NAME} -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
